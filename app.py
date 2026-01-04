@@ -1,5 +1,6 @@
 import streamlit as st
 import numpy as np
+import pandas as pd
 from scipy.stats import norm
 
 def black_scholes(S, K, T, r, sigma, type="call"):
@@ -31,7 +32,13 @@ col2.metric("Put Price", f"${put_price:.2f}")
 st.subheader("Call Price Sensitivity (Spot Price)")
 spot_range = np.linspace(S * 0.5, S * 1.5, 10)
 vol_range = np.linspace(0.1, 1.0, 10)
+call_data = [black_scholes(s, K, T, r, sigma, "call") for s in spot_range]
+put_data = [black_scholes(s, K, T, r, sigma, "put") for s in spot_range]
 
 st.write("Visualizing how volatility affects option prices...")
-chart_data = [black_scholes(s, K, T, r, sigma, "call") for s in spot_range]
+chart_data = pd.DataFrame({
+    "Call Price": call_data,
+    "Put Price": put_data
+}, index=spot_range)
+
 st.line_chart(chart_data)
