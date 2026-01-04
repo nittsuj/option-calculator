@@ -28,7 +28,7 @@ col1, col2 = st.columns(2)
 col1.metric("Call Price", f"${call_price:.2f}")
 col2.metric("Put Price", f"${put_price:.2f}")
 
-st.subheader("Call Price Sensitivity (Spot vs Volatility)")
+st.subheader("Call Price Sensitivity (Spot Price)")
 spot_range = np.linspace(S * 0.5, S * 1.5, 10)
 vol_range = np.linspace(0.1, 1.0, 10)
 
